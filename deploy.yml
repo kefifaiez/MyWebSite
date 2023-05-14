@@ -5,57 +5,69 @@
 
   tasks:
     - name: Install kubectl
+      become: yes
       command: "curl -LO 'https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl'"
       args:
         chdir: "{{ ansible_user_dir }}"
         creates: "{{ ansible_user_dir }}/kubectl"
 
     - name: Verify kubectl integrity
+      become: yes
       command: "echo '$(cat kubectl.sha256)  kubectl' | sha256sum --check"
       args:
         chdir: "{{ ansible_user_dir }}"
         creates: "{{ ansible_user_dir }}/kubectl.sha256"
 
     - name: Install kubectl
+      become: yes
       command: "sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"
 
     - name: Check kubectl version
+      become: yes
       command: "kubectl version --client"
 
     - name: Download minikube
+      become: yes
       command: "curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb"
       args:
         chdir: "{{ ansible_user_dir }}"
         creates: "{{ ansible_user_dir }}/minikube_latest_amd64.deb"
 
     - name: Install minikube
+      become: yes
       command: "sudo dpkg -i minikube_latest_amd64.deb"
 
     - name: Start minikube
+      become: yes
       command: "minikube start"
 
     # Build Docker image
     - name: Build Docker image
+      become: yes
       command: "docker build -t kefifaiez/mywebsite:latest {{ playbook_dir }}/mywebsite"
       args:
         chdir: "{{ ansible_user_dir }}"
 
     # Push Docker image to Docker Hub
     - name: Push Docker image
+      become: yes
       command: "docker push kefifaiez/mywebsite:latest"
 
     # Create namespace
     - name: Create namespace
+      become: yes
       command: "kubectl create namespace mywebsite"
 
     # Create deployment and service
     - name: Create deployment and service
+      become: yes
       command: "kubectl apply -f {{ playbook_dir }}/mywebsite/deployment.yaml -n mywebsite"
       args:
         chdir: "{{ ansible_user_dir }}"
 
     # Get service URL
     - name: Get service URL
+      become: yes
       command: "kubectl get service mywebsite-service -n mywebsite -o 'jsonpath={.status.loadBalancer.ingress[0].ip}'"
       register: service_ip
 
