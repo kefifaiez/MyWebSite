@@ -1,22 +1,30 @@
 ---
-- name: "Build and Deploy Docker Container for My Website"
+- name: "Build a container with ansible"
   hosts: localhost
   gather_facts: no
 
   tasks:
-    - name: Clone Git repository
-      git:
-        repo: https://github.com/kefifaiez/MyWebSite.git
-        dest: /path/to/your/website/directory
+    - name: stop current running container
+      command: docker stop web-container
+      ignore_errors: yes
 
-    - name: Enter the Jenkins directory
-      command: cd /path/to/your/website/directory/jenkinis
+    - name: remove stopped container
+      command: docker rm web-container
+      ignore_errors: yes
 
-    - name: Build Docker image using the existing Dockerfile
-      command: docker build -t kefifaiez/websitefinal:<tagname> .
+    - name: Remove unused Docker images
+      command: docker image prune -f
+      ignore_errors: yes
 
-    - name: Push Docker image to Docker Hub
-      command: docker push kefifaiez/websitefinal:<tagname>
+    - name: build docker image using the Dockerfile
+      command: docker build -t kefifaiez/websitefinal:test .
 
-    - name: Run Docker container
-      command: docker run -d -p 80:80 kefifaiez/websitefinal:<tagname>
+    - name: Push Image to dockerhub
+      command: docker push kefifaiez/websitefinal:test
+
+    - name: run container
+      command: docker run -d -p 80:80 --name web-container kefifaiez/websitefinal:test
+
+    - name: Afficher un message de terminé
+      debug:
+        msg: "Toutes les tâches sont terminées avec succès !"
