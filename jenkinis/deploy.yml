@@ -1,0 +1,22 @@
+---
+- name: "Build and Deploy Docker Container for My Website"
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Clone Git repository
+      git:
+        repo: https://github.com/kefifaiez/MyWebSite.git
+        dest: /path/to/your/website/directory
+
+    - name: Enter the Jenkins directory
+      command: cd /path/to/your/website/directory/jenkinis
+
+    - name: Build Docker image using the existing Dockerfile
+      command: docker build -t kefifaiez/websitefinal:<tagname> .
+
+    - name: Push Docker image to Docker Hub
+      command: docker push kefifaiez/websitefinal:<tagname>
+
+    - name: Run Docker container
+      command: docker run -d -p 80:80 kefifaiez/websitefinal:<tagname>

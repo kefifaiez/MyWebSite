@@ -1,0 +1,76 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64" # Official Ubuntu 20.04 LTS image
+  config.vm.network "private_network", type: "static", ip: "10.0.0.150" # Change the IP address here
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 2
+  end
+
+  config.vm.hostname = "jenkins" # Set the hostname to "jenkins"
+
+  config.vm.define "jenkins" do |jenkins| # Set the machine name to "jenkins"
+    jenkins.vm.provision "shell", inline: <<-SHELL
+      # Echo message for Git installation
+      echo "*************** Installing Git **************"
+      sudo apt update
+      sudo apt install git -y
+
+      # Echo message for Nano installation
+      echo "*************** Installing Nano **************"
+      sudo apt install nano -y
+
+      # Echo message for Ansible installation
+      echo "*************** Installing Ansible **************"
+      sudo apt install ansible -y
+
+      # Echo message for Java 11 installation
+      echo "*************** Installing Java 11 **************"
+      sudo apt install openjdk-11-jdk -y
+
+      # Echo message for Docker installation
+      echo "*************** Installing Docker **************"
+      sudo apt install docker.io -y
+
+      # Add the user to the docker group to avoid using sudo
+      sudo usermod -aG docker vagrant
+
+      # Echo message for Docker Compose installation
+      echo "*************** Installing Docker Compose **************"
+      sudo apt install docker-compose -y
+
+      # Make Docker Compose executable
+      sudo chmod +x /usr/local/bin/docker-compose
+
+      # Echo message for adding Jenkins repository and GPG key
+      echo "*************** Adding Jenkins Repository and GPG Key **************"
+      sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+      sudo apt update
+      sudo apt install openjdk-11-jdk  # Install Java 11 (required by Jenkins)
+      wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+      sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+      # Update package list after adding Jenkins repository
+      sudo apt update
+
+      # Echo message for Jenkins installation
+      echo "*************** Installing Jenkins **************"
+      sudo apt install jenkins -y
+
+      # Start Jenkins service
+      sudo systemctl start jenkins
+
+      # Wait for Jenkins to start completely
+      sleep 30
+
+      # Get the Jenkins initial admin password
+      INITIAL_ADMIN_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+
+      # Display the initial admin password
+      echo "Jenkins initial admin password: $INITIAL_ADMIN_PASSWORD"
+
+      # Allow Jenkins to use port 8080
+      sudo ufw allow 8080
+    SHELL
+  end
+end
