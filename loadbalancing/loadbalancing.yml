@@ -1,0 +1,41 @@
+---
+- name: "Déploiement du site web"
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Arrêter le conteneur en cours d'exécution (web-container-1)
+      command: docker stop web-container-1
+      ignore_errors: yes
+
+    - name: Supprimer le conteneur arrêté (web-container-1)
+      command: docker rm web-container-1
+      ignore_errors: yes
+
+    - name: Arrêter le conteneur en cours d'exécution (web-container-2)
+      command: docker stop web-container-2
+      ignore_errors: yes
+
+    - name: Supprimer le conteneur arrêté (web-container-2)
+      command: docker rm web-container-2
+      ignore_errors: yes
+
+    - name: Supprimer les images Docker non utilisées
+      command: docker rmi kefifaiez/websitefinal:test
+      ignore_errors: yes
+
+    - name: Build Docker image using the Dockerfile
+      command: docker build -t kefifaiez/websitefinal:test .
+
+    - name: Push Image to Docker Hub
+      command: docker push kefifaiez/websitefinal:test
+
+    - name: Créer un nouveau conteneur à partir de l'image mise à jour (web-container-1)
+      command: docker run -d -p 8081:80 --name web-container-1 kefifaiez/websitefinal:test
+
+    - name: Créer un nouveau conteneur à partir de l'image mise à jour (web-container-2)
+      command: docker run -d -p 8082:80 --name web-container-2 kefifaiez/websitefinal:test
+
+    - name: Afficher un message de terminé
+      debug:
+        msg: "Toutes les tâches sont terminées avec succès !"

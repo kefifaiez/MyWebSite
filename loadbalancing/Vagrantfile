@@ -1,0 +1,50 @@
+# Vagrantfile
+
+Vagrant.configure("2") do |config|
+  # Configuration du serveur DNS
+  config.vm.define "dns-server" do |dns|
+    dns.vm.box = "ubuntu/focal64" # Utilisez une image Ubuntu 20.04 LTS
+    dns.vm.network "private_network", type: "static", ip: "10.0.0.160" # Changez l'adresse IP au besoin
+    dns.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.cpus = 1
+    end
+    dns.vm.hostname = "dns-server" # Définissez le nom d'hôte sur "dns-server"
+  end
+
+  # Configuration de l'équilibreur de charge
+  config.vm.define "load-balancer" do |lb|
+    lb.vm.box = "ubuntu/focal64" # Utilisez une image Ubuntu 20.04 LTS
+    lb.vm.network "private_network", type: "static", ip: "10.0.0.180" # Changez l'adresse IP au besoin
+    lb.vm.network "forwarded_port", guest: 80, host: 8080
+    lb.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.cpus = 2
+    end
+    lb.vm.hostname = "load-balancer" # Définissez le nom d'hôte sur "load-balancer"
+    lb.vm.provision "shell", inline: <<-SHELL
+      # Installation de Git, Nano, Ansible, Java 11, Docker, Docker Compose, HAProxy et Jenkins
+      sudo apt update
+      sudo apt install git nano ansible openjdk-11-jdk docker.io -y
+      sudo usermod -aG docker vagrant
+      sudo apt install docker-compose -y
+      sudo apt install haproxy -y
+      sudo systemctl enable haproxy
+
+      # Installation de Jenkins
+      echo "*************** Adding Jenkins Repository and GPG Key **************"
+      sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+      sudo apt update
+      sudo apt install openjdk-11-jdk  # Install Java 11 (required by Jenkins)
+      wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+      sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+      sudo apt update
+      sudo apt install jenkins -y
+      sudo systemctl start jenkins
+      sleep 30
+      INITIAL_ADMIN_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+      echo "Jenkins initial admin password: $INITIAL_ADMIN_PASSWORD"
+      sudo ufw allow 8080
+    SHELL
+  end
+end

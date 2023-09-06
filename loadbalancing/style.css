@@ -1,0 +1,603 @@
+/* Upload des polices Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Réinitialisation des styles de base */
+* {
+    /* Réinitialise les marges, paddings et bordures par défaut */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Supprime la soulignement des liens */
+    text-decoration: none;
+    /* Supprime les bordures par défaut */
+    border: none;
+    /* Définit la police de base */
+    font-family: 'Poppins', sans-serif;
+    /* Supprime la mise en évidence (outline) des liens et autres éléments actifs */
+    outline: none;
+    /* Active le défilement en douceur lors du clic sur les liens d'ancrage */
+    scroll-behavior: smooth;
+}
+
+/* Variables de couleur */
+:root {
+    --bg-color: #1f242d;
+    --second-bg-color: #323946;
+    --text-color: #fff;
+    --main-color: #0ef;
+}
+
+/* Taille de la police de base en pourcentage */
+html {
+    font-size: 62.5%;
+}
+
+/* Style du corps de la page */
+body {
+    left: 0;
+    bottom: 0;
+    /* Couleur d'arrière-plan pour tout le corps de la page */
+    background: var(--bg-color);
+    /* Couleur de texte pour tout le corps de la page */
+    color: var(--text-color);
+}
+
+/* Style de l'en-tête de la page */
+.header {
+    /* Fixe l'en-tête en haut de la fenêtre lors du défilement */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    /* Aligne les éléments horizontalement dans l'en-tête */
+    display: flex;
+    align-items: center;
+    /* Place l'en-tête au-dessus de tout le contenu */
+    z-index: 100;
+    /* Couleur de fond pour l'en-tête */
+    background: var(--bg-color);
+    /* Espacement égal entre les éléments de l'en-tête */
+    justify-content: space-between;
+}
+
+/* Style du logo */
+.logo {
+    font-size: 2.5rem;
+    /* Couleur du texte du logo */
+    color: #0ef;
+    font-weight: 600;
+    /* cursor: default; */
+    /*animation logo slide right*/
+    opacity: 0;
+    animation: right 1s ease forwards;
+}
+.logo:hover{
+transform: scale(1.02);
+color: rgb(182, 202, 231);
+}
+
+/* Style des liens de navigation */
+.navbar a {
+    font-size: 1.7rem;
+    /* Couleur du texte des liens de navigation */
+    color: var(--text-color);
+    /* Marge à gauche entre chaque élément de navigation */
+    margin-left: 4rem;
+    /* Vitesse de transition au survol */
+    transition: .3s;
+ /*animation logo slide top*/
+  opacity: 0;
+  animation: top 1s ease forwards;
+  animation-delay: calc(0.2s * var(--i));
+  display:inline-block;
+}
+
+/* Style des liens de navigation au survol et pour l'élément actif */
+.navbar a:hover,
+.navbar a.active {
+    /* Couleur du texte des liens de navigation lorsqu'ils sont survolés ou actifs */
+    color: var(--main-color);
+}
+
+/* Style de l'icône de menu (cachée par défaut) */
+#menu-icon {
+    font-size: 3.6rem;
+    color:var(--text-color);
+    /* Cachée par défaut */
+    display: none;
+}
+
+.home{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style de l'image d'accueil */
+.home-img {
+    width: 35vw;
+    height: 35vw;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 8px 12px #0ef;
+    /* Ajoutez une transition de 5s pour une animation fluide lors du survol */
+    transition: box-shadow 5s, opacity 5s;
+}
+
+/* Style de l'image à l'intérieur de l'accueil */
+.home-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ajoutez une transition de 0.3s pour une animation fluide lors du survol */
+    transition: 5s ;
+}
+
+/* Effet de survol sur l'image */
+.home-img:hover {
+    /* Changez la couleur de l'ombre lors du survol */
+    box-shadow: 0 8px 12px rgb(77, 25, 208); /* Par exemple, changez la couleur de l'ombre en rouge (#f00) */
+}
+
+/* Effet de survol sur l'image */
+.home-img img:hover  {
+    /* Rendez l'image plus transparente lors du survol */
+    opacity: 0.7; /* Par exemple, 0.5 pour la moitié de l'opacité */
+    scale: 0.95;
+}
+
+/* Style de la section */
+section {
+    /* Définit une hauteur minimale de 100vh (viewport height) pour la section. */
+    min-height: 100vh;
+    /* Définit les marges intérieures à 0 pour la marge supérieure et inférieure, et 2rem pour la marge inférieure. */
+    padding: 8rem 9% 2rem;
+}
+
+/* Style de la classe home */
+.home {
+    display: flex;
+    /* Espacement égal entre les éléments de la classe home */
+    justify-content: space-between;
+    /* Aligne les éléments verticalement dans la classe home */
+    align-items: center;
+}
+
+/* Style des titres h3 à l'intérieur de la classe home-content */
+.home-content h3 {
+    font-size: 3.2rem;
+    font-weight: 700;
+     /**********animation logo slide bottom************/
+     opacity: 0;
+     animation: bottom 1s ease forwards;
+     animation-delay: .7s;
+
+}
+
+/* Applique une marge inférieure de 2 rem uniquement au deuxième élément h3 à l'intérieur de la classe home-content */
+.home-content h3 :nth-of-type(2) {
+    margin-bottom: 2rem;
+    /**********animation logo slide bottom************/
+    opacity: 0;
+    animation: top 1s ease forwards;
+    animation-delay: .7s;
+}
+
+/* Couleur du texte pour les éléments de la balise <span> */
+span {
+    color: var(--main-color);
+}
+
+/* Style des titres h1 à l'intérieur de la classe home-content */
+.home-content h1 {
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+
+    opacity: 0;
+    animation: right 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+/* Style pour les paragraphes à l'intérieur de la classe .home-content */
+.home-content p {
+    /* Définit la taille de la police à 1.6rem */
+    font-size: 1.6rem;
+}
+
+/* Style pour les liens <a> à l'intérieur de la classe .social-media */
+.social-media a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: 0.2rem solid var(--main-color);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--main-color);
+    margin: 3rem 1.5rem 3rem 0;
+    /* Vitesse de transition au survol */
+    transition: 0.5s ease;
+}
+
+/* Style pour les liens <a> à l'intérieur de la classe .social-media lorsqu'ils sont survolés */
+.social-media a:hover {
+    /* Couleur de l'arrière-plan du lien sur la couleur principale (--main-color) */
+    background: var(--main-color);
+    /* Couleur du texte du lien sur la couleur secondaire (--second-bg-color) */
+    color: var(--second-bg-color);
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: var(--main-color);
+    border-radius: 4rem;
+    box-shadow: 0 0 1rem var(--main-color);
+    font-size: 1.6rem;
+    color: var(--second-bg-color);
+    letter-spacing: .1rem;
+    font-weight: 600;
+    transition: box-shadow 0.5s ease; /* Ajoutez "box-shadow" à la propriété transition */
+}
+
+/* Effet de survol pour .btn */
+.btn:hover {
+    box-shadow: none;
+}
+ /************about******************/
+.about {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    background: var(--second-bg-color);
+    position: relative;
+}
+
+  .about-img img {
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 20px #0ef; /* Ajoute l'ombre de 20px */
+    width: 35vh;
+    object-fit: cover;
+    animation: elevateImage 10s ease infinite; /* Ajoute l'animation avec le nom "elevateImage" */
+  }
+  
+  @keyframes elevateImage {
+    0%, 100% {
+      transform: translateY(0); /* Position de départ et position finale - l'image reste à sa position d'origine */
+    }
+    50% {
+      transform: translateY(-20px); /* Position intermédiaire - l'image monte de 20px */
+    }
+  }
+  
+  .heading{
+    text-align: center;
+    font-size: 4.5rem;
+  }
+  
+  .about-content {
+    padding-left: 20px;
+  }
+  
+  .about-content h2 {
+    text-align: left;
+    line-height: 1.2;
+  }
+  
+  .about-content h3 {
+    font-size: 2.6rem;
+  }
+  
+  .about-content p {
+    font-size: 1.6rem;
+    margin: 2rem 0 3rem;
+  }
+
+/**************** About ***************/
+
+/* Marge en bas pour le titre de la section "services" */
+.services h2 {
+    margin-bottom: 5rem;
+}
+
+/* Conteneur des services */
+.services-container {
+    display: flex;
+    justify-content: center; /* Centre horizontalement les éléments */
+    align-items: center; /* Centre verticalement les éléments */
+    flex-wrap: wrap; /* Permet aux boîtes de service de s'enrouler lorsque la largeur de l'écran est réduite */
+    gap: 2rem; /* Espace entre les boîtes de service */
+}
+
+/* Boîte de service */
+.services-container .services-box {
+    flex: 1 1 30rem; /* Propriétés flex pour le dimensionnement automatique des boîtes de service */
+    background: var(--second-bg-color); /* Couleur d'arrière-plan de la boîte de service */
+    padding: 3rem 2rem 4rem; /* Rembourrage de la boîte de service */
+}
+
+/* Style pour les boîtes de service */
+.services-container .services-box {
+    flex: 1 1 30rem; /* Propriétés flex pour le dimensionnement automatique des boîtes de service */
+    background: var(--second-bg-color); /* Couleur d'arrière-plan de la boîte de service */
+    padding: 3rem 2rem 4rem; /* Rembourrage (haut, droite, bas, gauche) de la boîte de service */
+    border-radius: 2rem; /* Rayon de bordure pour arrondir les coins de la boîte de service */
+    text-align: center; /* Centrer le contenu (titre, icône, etc.) horizontalement dans la boîte */
+    border: 0.2rem solid var(--bg-color); /* Bordure solide de 0.2rem avec la couleur de l'arrière-plan du body (--bg-color) */
+    transition: 0.5s ease;
+}
+
+.services-container .services-box:hover {
+border-color: var(--main-color);
+transform: scale(1.02);
+}
+
+/* Style pour l'icône à l'intérieur des boîtes de service */
+.services-box i {
+    font-size: 7rem; /* Taille de la police de l'icône */
+    color: var(--main-color) ;/* Couleur de l'icône */
+}
+
+.services-box h3{
+    font-size: 2.6rem;
+}
+.services-box p{
+    font-size: 1.6;
+    margin: 1rem 0 3rem;
+}
+  
+/*------------ portfolio ---------*/
+
+.portfolio{
+    background: var(--second-bg-color);
+}
+
+.portfolio h2{
+    margin-bottom: 4rem;
+}
+/**********************************************************************************************/
+/*solution avec grid */
+
+
+.portfolio-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    align-items: center;
+    gap: 2.5rem;
+}
+
+
+.portfolio-container .portfolio-box {
+    position: relative;
+    display: flex;
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem var(--bg-color);
+    overflow: hidden;
+    aspect-ratio: 1/0.6; 
+    align-items: center; 
+    transition: 0.6s ease;
+}
+
+/**************************************************************************************************/
+/*
+.portfolio-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2.5rem;
+  }
+  
+  .portfolio-container .portfolio-box {
+    position: relative;
+    flex: 1 0 calc((100% - 5rem) / 3); 
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem var(--bg-color);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  */
+/******************************************************************************/
+
+.portfolio-container .portfolio-box img {
+    width: 100%; /* Fait en sorte que l'image remplisse complètement son conteneur .portfolio-box */
+    height: 100%; /* Permet de conserver le rapport d'aspect de l'image */
+}
+
+.portfolio-box .portfolio-layer {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.1), var(--main-color));
+    text-align: center;
+    padding: 4rem;
+}
+  
+
+.portfolio-layer h4 {
+    font-size: 3rem;
+}
+
+.portfolio-layer p {
+    font-size: 1.6rem;
+    margin: 0.3rem 0 1rem;
+}
+
+.portfolio-box .portfolio-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 4rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.1), var(--main-color));
+    text-align: center;
+    transform: translateY(100%);
+    transition: 0.6s ease;
+}
+
+.portfolio-box:hover .portfolio-layer {
+    transform: translateY(0%);
+
+}
+
+.portfolio-box:hover{
+transform: scale(0.97);
+}
+
+/*-------------------contact----------------------*/
+
+.contact h2 {
+    margin-bottom: 3rem;
+  }
+  
+  .contact form {
+    max-width: 70rem; 
+    margin: 1rem auto; /* Ajoute une marge de 1rem en haut et en bas, et une marge automatique sur les côtés pour centrer le formulaire */
+    text-align: center; /* Centre le contenu à l'intérieur du formulaire */
+    margin-bottom: 3rem; 
+  }
+  
+  .contact form .input-box {
+    display: flex; 
+    justify-content: space-between; 
+    flex-wrap: wrap; /* Permet aux champs de saisie de passer à la ligne suivante s'il n'y a pas suffisamment d'espace dans une seule ligne */
+  }
+  
+  /* CSS pour les champs de saisie et la zone de texte dans la section de contact */
+.input-box input,
+.contact form textarea {
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.6rem;
+  color: var(--text-color);
+  background: var(--second-bg-color);
+  border-radius: .8rem;
+  margin: .7rem 0;
+}
+
+.input-box input {
+   width: 49%;
+}
+
+.contact form .btn {
+    margin-top: 20px;
+}
+
+/*----------------------footer-------------*/
+footer{
+    text-align: center;
+}
+footer p{
+    font-size: 1.6rem;
+    margin-bottom: -10px;
+}
+
+
+/*------------------------------ key animation----------------------------------------------*/
+@keyframes right {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1; 
+    }
+  }
+
+  @keyframes top {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1; 
+    }
+  }
+
+  @keyframes bottom {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1; 
+    }
+  }
+
+
+/*---------------------- Media query pour les écrans de taille inférieure à 768px (petits écrans) ------------------------*/
+@media screen and (max-width: 900px) {
+
+    .portfolio-container {
+        grid-template-columns: repeat(2, 1fr); /* 3 colonnes pour les écrans de taille moyenne */
+    }
+    .header {
+        flex-wrap: wrap;
+    }
+    .home{
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+.home-content{
+    text-align: center;
+}
+
+.home-img
+{
+    display: none;
+
+}
+}
+
+/*----------------------------- Media query pour les écrans de taille inférieure à 780px (très petits écrans) ----------------------*/
+@media screen and (max-width: 780px) {
+    .about{
+flex-wrap: wrap;
+    }
+
+.about-content{
+    text-align: center;
+}
+
+.about-content h2 {
+    text-align: center;
+}
+
+    .navbar a {
+        font-size: 1.4rem;
+        /* Marge à gauche entre chaque élément de navigation */
+        margin-left: 2rem;
+    }
+   
+}
+
+@media screen and (max-width: 552px) {
+
+    .portfolio-container {
+        grid-template-columns: repeat(1, 1fr); /* 6 colonnes pour les très petits écrans */
+    }
+    .portfolio-container .portfolio-box {
+width: 80%;
+height: 82%;
+margin: auto;
+    }
+}
